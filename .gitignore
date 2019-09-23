@@ -1,0 +1,13 @@
+# Exclude the config file
+config.ini
+
+# Exclude Editor extras
+.vscode
+
+# Exclude python virtual environment
+bin
+include
+lib
+lib64
+share
+pyvenv.cfg
