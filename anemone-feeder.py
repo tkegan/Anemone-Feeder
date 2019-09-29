@@ -104,17 +104,17 @@ class Simulation():
         Using the stored config advance the model a set number of timesteps or
         until a specified end condition is met
         '''
-        time_index = 0
+        time_index = 1
         max_timesteps = self.config.getint('simulation', 'num_timesteps', fallback=DEFAULT_NUM_TIMESTEPS)
         min_food_pieces_remaining = self.config.getint('simulation', 'min_remaining_food_pieces', fallback=DEFAULT_MIN_NUM_REMAINING_FOOD_PIECES)
 
         logging.debug("Running for %d steps or until less than %d pieces of food remain", max_timesteps, min_food_pieces_remaining)
-        while time_index < max_timesteps and len(self.food) >= min_food_pieces_remaining:
+        while time_index <= max_timesteps and len(self.food) >= min_food_pieces_remaining:
             logging.info("Advancing to timestep: %s", time_index)
             self.step()
             time_index += 1
         
-        logging.info("Run ended after %d timesteps", time_index)
+        logging.info("Run ended after %d timesteps", time_index - 1)
         logging.info("\t%d pieces of food remain", len(self.food))
 
 
@@ -160,18 +160,22 @@ if __name__ == "__main__":
 
     # we use arg parse to parse the command line and create a help message
     parser = argparse.ArgumentParser(
-        description='Model the feeding of a sea anemone.',
-        epilog="Author: Tom Egan <tkegan@greenneondesign.com>")
-    parser.add_argument('config_file_path',
-        nargs='?',
-        default=DEFAULT_CONFIG_FILE_PATH,
-        help='File path to the config file (ini format) to use. See also example-config.ini')
-    parser.add_argument('-oi', '--output-initial',
-        action='store_true',
-        help='Output initial model state')
-    parser.add_argument('-of', '--output-final',
-        action='store_true',
-        help='Output initial model state')
+        description = "Model the feeding of a sea anemone.",
+        epilog = "Author: Tom Egan <tkegan@greenneondesign.com>")
+    parser.add_argument("config_file_path",
+        nargs = "?",
+        default = DEFAULT_CONFIG_FILE_PATH,
+        help = "File path to the config file (ini format) to use. See also example-config.ini")
+    parser.add_argument("-oi", "--output-initial",
+        action = "store_true",
+        help = "Output initial model state")
+    parser.add_argument("-of", "--output-final",
+        action = "store_true",
+        help = "Output initial model state")
+    parser.add_argument("-o", "--output-directory",
+        nargs = "?",
+        default = None,
+        help = "Output initial model state")
     
     args = parser.parse_args()
 

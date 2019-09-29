@@ -11,3 +11,6 @@ lib
 lib64
 share
 pyvenv.cfg
+
+# Exclude python interpreter caches
+__pycache__
